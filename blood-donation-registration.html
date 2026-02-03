@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #c0392b 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .blood-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #c0392b;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ff6b6b;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #c0392b);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #34495e;
+            color: white;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-info {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #ff6b6b, #c0392b);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #fff5f5;
+        }
+
+        .btn-small {
+            padding: 6px 15px;
+            font-size: 0.85rem;
+            border-radius: 5px;
+        }
+
+        .btn-print {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #ff6b6b, #c0392b);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .stat-box .number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stat-box .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-style: italic;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .config-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .config-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .config-input input {
+            flex: 1;
+            min-width: 250px;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .config-input input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-connected {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .setup-steps {
+            background: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 15px 20px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .setup-steps ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .setup-steps code {
+            background: #f1f1f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            background: white;
+            padding: 30px 50px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #c0392b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="blood-icon">🩸</div>
+            <h1>Blood Donation Registration</h1>
+            <p>Save Lives - Donate Blood</p>
+        </div>
+
+        <div class="card">
+            <h2>📊 Google Sheets Configuration</h2>
+            <div class="config-section">
+                <h3>Connect to your Google Sheets:</h3>
+                <div class="config-input">
+                    <input type="text" id="scriptUrl" placeholder="Paste your Google Apps Script Web App URL here">
+                    <button class="btn btn-info" onclick="connectGoogleSheets()">Connect</button>
+                    <span id="connectionStatus" class="status-badge status-disconnected">Not Connected</span>
+                </div>
+
+                <div class="setup-steps">
+                    <strong>📋 One-time Setup Instructions:</strong>
+                    <ol>
+                        <li>Create a new Google Sheet with headers: <code>Reg. No</code>, <code>Name</code>, <code>Age</code>, <code>Gender</code>, <code>Mobile</code>, <code>Refer By</code></li>
+                        <li>Go to <strong>Extensions → Apps Script</strong></li>
+                        <li>Delete any code and paste the script from <code>google-apps-script.js</code> file</li>
+                        <li>Click <strong>Deploy → New deployment</strong></li>
+                        <li>Select type: <strong>Web app</strong></li>
+                        <li>Set "Who has access" to <strong>Anyone</strong></li>
+                        <li>Click <strong>Deploy</strong> and copy the Web App URL</li>
+                        <li>Paste the URL above and click <strong>Connect</strong></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>New Registration</h2>
+            <form id="registrationForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="regNo">Reg. No</label>
+                        <input type="number" id="regNo" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" required min="18" max="65" placeholder="18-65">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile</label>
+                        <input type="tel" id="mobile" required placeholder="10-digit number" pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label for="referBy">Refer By</label>
+                        <input type="text" id="referBy" placeholder="Referral name">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Register Donor</button>
+                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Registered Donors</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="number" id="totalDonors">0</div>
+                    <div class="label">Total Donors</div>
+                </div>
+            </div>
+            <div class="btn-group" style="margin-bottom: 20px; margin-top: 0;">
+                <button class="btn btn-warning" onclick="refreshData()">🔄 Refresh Data</button>
+                <button class="btn btn-success" onclick="downloadCSV()">📥 Download CSV</button>
+            </div>
+            <div class="table-container">
+                <table id="donorsTable">
+                    <thead>
+                        <tr>
+                            <th>Reg. No</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Mobile</th>
+                            <th>Refer By</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="donorsBody">
+                    </tbody>
+                </table>
+                <div class="no-data" id="noData">No donors registered yet. Connect to Google Sheets and add a new registration above.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let donors = [];
+        let nextRegNo = 1;
+        let scriptUrl = '';
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadConfig();
+            updateTable();
+            updateRegNo();
+        });
+
+        // Show/hide loading
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Load saved configuration
+        function loadConfig() {
+            const savedUrl = localStorage.getItem('googleScriptUrl');
+            if (savedUrl) {
+                document.getElementById('scriptUrl').value = savedUrl;
+                scriptUrl = savedUrl;
+                fetchDonors();
+            }
+        }
+
+        // Connect to Google Sheets
+        function connectGoogleSheets() {
+            const url = document.getElementById('scriptUrl').value.trim();
+            if (!url) {
+                alert('Please enter your Google Apps Script Web App URL');
+                return;
+            }
+
+            if (!url.includes('script.google.com')) {
+                alert('Please enter a valid Google Apps Script URL.\nIt should look like: https://script.google.com/macros/s/.../exec');
+                return;
+            }
+
+            scriptUrl = url;
+            localStorage.setItem('googleScriptUrl', url);
+            fetchDonors();
+        }
+
+        // Fetch donors from Google Sheets
+        async function fetchDonors() {
+            const status = document.getElementById('connectionStatus');
+            status.textContent = 'Connecting...';
+            status.className = 'status-badge status-loading';
+
+            showLoading();
+
+            try {
+                const response = await fetch(`${scriptUrl}?action=get`);
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    donors = result.data || [];
+                    status.textContent = 'Connected';
+                    status.className = 'status-badge status-connected';
+                } else {
+                    throw new Error(result.message || 'Failed to fetch data');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                status.textContent = 'Connection Failed';
+                status.className = 'status-badge status-disconnected';
+                donors = [];
+            }
+
+            hideLoading();
+            updateTable();
+            updateRegNo();
+        }
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (!scriptUrl) {
+                alert('Please connect to Google Sheets first!');
+                return;
+            }
+
+            const donor = {
+                regNo: parseInt(document.getElementById('regNo').value),
+                name: document.getElementById('name').value.trim(),
+                age: parseInt(document.getElementById('age').value),
+                gender: document.getElementById('gender').value,
+                mobile: document.getElementById('mobile').value.trim(),
+                referBy: document.getElementById('referBy').value.trim() || '-'
+            };
+
+            showLoading();
+            document.getElementById('submitBtn').disabled = true;
+
+            try {
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'add',
+                        data: donor
+                    })
+                });
+
+                // Since no-cors doesn't return data, we refresh to verify
+                await fetchDonors();
+                this.reset();
+                alert('Donor registered successfully!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to register donor. Please try again.');
+            }
+
+            document.getElementById('submitBtn').disabled = false;
+            hideLoading();
+        });
+
+        // Update registration number
+        function updateRegNo() {
+            if (donors.length > 0) {
+                nextRegNo = Math.max(...donors.map(d => d.regNo || 0)) + 1;
+            }
+            document.getElementById('regNo').value = nextRegNo;
+        }
+
+        // Update table display
+        function updateTable() {
+            const tbody = document.getElementById('donorsBody');
+            const noData = document.getElementById('noData');
+            const totalDonorsEl = document.getElementById('totalDonors');
+
+            tbody.innerHTML = '';
+            totalDonorsEl.textContent = donors.length;
+
+            if (donors.length === 0) {
+                noData.style.display = 'block';
+                return;
+            }
+
+            noData.style.display = 'none';
+
+            donors.forEach((donor, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${donor.regNo}</td>
+                    <td>${donor.name}</td>
+                    <td>${donor.age}</td>
+                    <td>${donor.gender}</td>
+                    <td>${donor.mobile}</td>
+                    <td>${donor.referBy || '-'}</td>
+                    <td>
+                        <button class="btn btn-small btn-print" onclick="printDonor(${index})">Print</button>
+                        <button class="btn btn-small btn-delete" onclick="deleteDonor(${donor.regNo})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Print donor details in new tab
+        function printDonor(index) {
+            const donor = donors[index];
+
+            const printWindow = window.open('', '_blank');
+
+            const printContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Blood Donor - ${donor.name}</title>
+                    <style>
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body {
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                            padding: 40px;
+                            max-width: 600px;
+                            margin: 0 auto;
+                        }
+                        .header {
+                            text-align: center;
+                            border-bottom: 3px solid #c0392b;
+                            padding-bottom: 20px;
+                            margin-bottom: 30px;
+                        }
+                        .header h1 {
+                            color: #c0392b;
+                            font-size: 1.8rem;
+                        }
+                        .header p {
+                            color: #666;
+                            margin-top: 5px;
+                        }
+                        .blood-icon {
+                            font-size: 3rem;
+                            margin-bottom: 10px;
+                        }
+                        .card {
+                            border: 2px solid #c0392b;
+                            border-radius: 10px;
+                            padding: 25px;
+                            margin-bottom: 20px;
+                        }
+                        .card h2 {
+                            color: #c0392b;
+                            margin-bottom: 20px;
+                            text-align: center;
+                        }
+                        .info-row {
+                            display: flex;
+                            border-bottom: 1px solid #eee;
+                            padding: 12px 0;
+                        }
+                        .info-row:last-child {
+                            border-bottom: none;
+                        }
+                        .label {
+                            font-weight: 600;
+                            color: #333;
+                            width: 140px;
+                        }
+                        .value {
+                            color: #555;
+                            flex: 1;
+                        }
+                        .footer {
+                            text-align: center;
+                            margin-top: 30px;
+                            color: #999;
+                            font-size: 0.9rem;
+                        }
+                        .reg-badge {
+                            background: #c0392b;
+                            color: white;
+                            padding: 10px 25px;
+                            border-radius: 25px;
+                            display: inline-block;
+                            font-size: 1.2rem;
+                            font-weight: bold;
+                            margin-bottom: 20px;
+                        }
+                        @media print {
+                            body { padding: 20px; }
+                            .no-print { display: none; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="blood-icon">🩸</div>
+                        <h1>Blood Donation Registration</h1>
+                        <p>Donor Certificate</p>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div class="reg-badge">Registration No: ${donor.regNo}</div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Donor Information</h2>
+                        <div class="info-row">
+                            <div class="label">Name:</div>
+                            <div class="value">${donor.name}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Age:</div>
+                            <div class="value">${donor.age} years</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Gender:</div>
+                            <div class="value">${donor.gender === 'M' ? 'Male' : donor.gender === 'F' ? 'Female' : 'Other'}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Mobile:</div>
+                            <div class="value">${donor.mobile}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Referred By:</div>
+                            <div class="value">${donor.referBy || '-'}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Date:</div>
+                            <div class="value">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        <p>Thank you for your generous contribution!</p>
+                        <p style="margin-top: 5px;">Your donation can save up to 3 lives.</p>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;" class="no-print">
+                        <button onclick="window.print()" style="
+                            padding: 12px 40px;
+                            background: #c0392b;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            font-size: 1rem;
+                            cursor: pointer;
+                        ">Print This Page</button>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+        }
+
+        // Delete donor
+        async function deleteDonor(regNo) {
+            if (!confirm('Are you sure you want to delete this donor record?')) {
+                return;
+            }
+
+            if (!scriptUrl) {
+                alert('Please connect to Google Sheets first!');
+                return;
+            }
+
+            showLoading();
+
+            try {
+                await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'delete',
+                        regNo: regNo
+                    })
+                });
+
+                // Refresh to verify deletion
+                await fetchDonors();
+                alert('Donor deleted successfully!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to delete donor. Please try again.');
+            }
+
+            hideLoading();
+        }
+
+        // Refresh data
+        function refreshData() {
+            if (!scriptUrl) {
+                alert('Please connect to Google Sheets first!');
+                return;
+            }
+            fetchDonors();
+        }
+
+        // Download as CSV
+        function downloadCSV() {
+            if (donors.length === 0) {
+                alert('No data to download!');
+                return;
+            }
+
+            const headers = ['Reg. No', 'Name', 'Age', 'Gender', 'Mobile', 'Refer By'];
+            const csvContent = [
+                headers.join(','),
+                ...donors.map(d => [
+                    d.regNo,
+                    `"${d.name}"`,
+                    d.age,
+                    d.gender,
+                    d.mobile,
+                    `"${d.referBy || '-'}"`
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `blood_donors_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+    </script>
+</body>
+</html>

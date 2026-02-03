@@ -367,31 +367,7 @@
             <p>Save Lives - Donate Blood</p>
         </div>
 
-        <div class="card">
-            <h2>📊 Google Sheets Configuration</h2>
-            <div class="config-section">
-                <h3>Connect to your Google Sheets:</h3>
-                <div class="config-input">
-                    <input type="text" id="scriptUrl" placeholder="Paste your Google Apps Script Web App URL here">
-                    <button class="btn btn-info" onclick="connectGoogleSheets()">Connect</button>
-                    <span id="connectionStatus" class="status-badge status-disconnected">Not Connected</span>
-                </div>
-
-                <div class="setup-steps">
-                    <strong>📋 One-time Setup Instructions:</strong>
-                    <ol>
-                        <li>Create a new Google Sheet with headers: <code>Reg. No</code>, <code>Name</code>, <code>Age</code>, <code>Gender</code>, <code>Mobile</code>, <code>Refer By</code></li>
-                        <li>Go to <strong>Extensions → Apps Script</strong></li>
-                        <li>Delete any code and paste the script from <code>google-apps-script.js</code> file</li>
-                        <li>Click <strong>Deploy → New deployment</strong></li>
-                        <li>Select type: <strong>Web app</strong></li>
-                        <li>Set "Who has access" to <strong>Anyone</strong></li>
-                        <li>Click <strong>Deploy</strong> and copy the Web App URL</li>
-                        <li>Paste the URL above and click <strong>Connect</strong></li>
-                    </ol>
-                </div>
-            </div>
-        </div>
+        <!-- Configuration section hidden - auto-connected to Google Sheets -->
 
         <div class="card">
             <h2>New Registration</h2>
@@ -470,7 +446,8 @@
     <script>
         let donors = [];
         let nextRegNo = 1;
-        let scriptUrl = '';
+        // Auto-connect to Google Sheets
+        let scriptUrl = 'https://script.google.com/macros/s/AKfycbxdimRay4_MsOYMZKXRSJRVp-dqsrK5FeJyEo6cm8x-yD1fZ3_whgljDDkC7lBIlZPx/exec';
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -488,14 +465,10 @@
             document.getElementById('loadingOverlay').style.display = 'none';
         }
 
-        // Load saved configuration
+        // Auto-connect on page load
         function loadConfig() {
-            const savedUrl = localStorage.getItem('googleScriptUrl');
-            if (savedUrl) {
-                document.getElementById('scriptUrl').value = savedUrl;
-                scriptUrl = savedUrl;
-                fetchDonors();
-            }
+            // Auto-fetch data since URL is hardcoded
+            fetchDonors();
         }
 
         // Connect to Google Sheets
@@ -518,10 +491,6 @@
 
         // Fetch donors from Google Sheets
         async function fetchDonors() {
-            const status = document.getElementById('connectionStatus');
-            status.textContent = 'Connecting...';
-            status.className = 'status-badge status-loading';
-
             showLoading();
 
             try {
@@ -530,15 +499,11 @@
 
                 if (result.status === 'success') {
                     donors = result.data || [];
-                    status.textContent = 'Connected';
-                    status.className = 'status-badge status-connected';
                 } else {
                     throw new Error(result.message || 'Failed to fetch data');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                status.textContent = 'Connection Failed';
-                status.className = 'status-badge status-disconnected';
                 donors = [];
             }
 

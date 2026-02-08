@@ -614,80 +614,89 @@
                     <title>Blood Donor - ${donor.name}</title>
                     <style>
                         * { margin: 0; padding: 0; box-sizing: border-box; }
-                        @page { size: A4; margin: 10mm; }
+                        @page { size: A5 landscape; margin: 3mm; }
                         body {
                             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                            padding: 15px 25px;
-                            max-width: 210mm;
-                            margin: 0 auto;
-                            font-size: 12px;
+                            padding: 5px 10px;
+                            font-size: 9px;
+                        }
+                        .main-container {
+                            display: flex;
+                            gap: 15px;
+                            align-items: flex-start;
+                        }
+                        .left-section {
+                            flex: 1;
+                        }
+                        .right-section {
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
                         }
                         .header {
                             text-align: center;
                             border-bottom: 2px solid #c0392b;
-                            padding-bottom: 10px;
-                            margin-bottom: 15px;
+                            padding-bottom: 4px;
+                            margin-bottom: 5px;
                         }
                         .header h1 {
                             color: #c0392b;
-                            font-size: 1.5rem;
+                            font-size: 1rem;
                             margin-bottom: 2px;
                         }
-                        .header p {
-                            color: #666;
-                            font-size: 0.9rem;
-                        }
                         .organizer-header {
-                            margin-top: 8px;
-                            line-height: 1.4;
+                            line-height: 1.2;
                         }
                         .organizer-header .org-label {
-                            display: block;
-                            font-size: 0.75rem;
+                            font-size: 0.55rem;
                             color: #888;
                         }
                         .organizer-header .org-name {
-                            display: block;
-                            font-size: 1.1rem;
+                            font-size: 0.8rem;
                             font-weight: bold;
                             color: #c0392b;
                             font-family: 'Georgia', serif;
                         }
                         .organizer-header .org-address {
-                            display: block;
-                            font-size: 0.7rem;
+                            font-size: 0.5rem;
                             color: #666;
                         }
+                        .organizer-header .org-date {
+                            font-size: 0.6rem;
+                            color: #333;
+                            font-weight: 600;
+                            margin-top: 2px;
+                        }
                         .blood-icon {
-                            font-size: 2rem;
-                            margin-bottom: 5px;
+                            font-size: 1rem;
                         }
                         .reg-badge {
                             background: #c0392b;
                             color: white;
-                            padding: 6px 20px;
-                            border-radius: 20px;
+                            padding: 2px 10px;
+                            border-radius: 10px;
                             display: inline-block;
-                            font-size: 1rem;
+                            font-size: 0.65rem;
                             font-weight: bold;
-                            margin: 10px 0;
+                            margin: 4px 0;
                         }
                         .card {
                             border: 1px solid #c0392b;
-                            border-radius: 8px;
-                            padding: 15px;
-                            margin-bottom: 15px;
+                            border-radius: 5px;
+                            padding: 5px 8px;
+                            margin-bottom: 5px;
                         }
                         .card h2 {
                             color: #c0392b;
-                            margin-bottom: 10px;
+                            margin-bottom: 4px;
                             text-align: center;
-                            font-size: 1.1rem;
+                            font-size: 0.75rem;
                         }
                         .info-row {
                             display: flex;
                             border-bottom: 1px solid #eee;
-                            padding: 8px 0;
+                            padding: 5px 0;
+                            align-items: center;
                         }
                         .info-row:last-child {
                             border-bottom: none;
@@ -695,61 +704,56 @@
                         .label {
                             font-weight: 600;
                             color: #333;
-                            width: 110px;
+                            width: 70px;
+                            font-size: 0.65rem;
                         }
                         .value {
                             color: #555;
                             flex: 1;
+                            font-size: 0.65rem;
+                            text-align: center;
                         }
                         .thank-you {
                             text-align: center;
-                            margin: 12px 0;
                             color: #666;
-                            font-size: 0.85rem;
-                        }
-                        .blood-bank-section {
-                            margin-top: 15px;
+                            font-size: 0.55rem;
+                            margin-top: 4px;
                         }
                         .blood-bank-table {
                             width: 100%;
                             border-collapse: collapse;
-                            font-size: 11px;
+                            font-size: 0.65rem;
                         }
                         .blood-bank-table td {
-                            border: 1px solid #333;
-                            padding: 8px 10px;
+                            border: 1px solid #c0392b;
+                            padding: 6px 8px;
                             text-align: center;
                         }
                         .blood-bank-table .header-cell {
                             font-weight: bold;
                             background: #f5f5f5;
+                            color: #c0392b;
                         }
                         .blood-bank-table .label-cell {
-                            text-align: left;
                             font-weight: 600;
-                            width: 80px;
-                        }
-                        .blood-bank-table .wide-cell {
-                            width: 45%;
-                        }
-                        .checkbox-cell {
-                            width: 60px;
+                            width: 40%;
+                            text-align: left;
                         }
                         @media print {
-                            body { padding: 10px; }
+                            body { padding: 3px; }
                             .no-print { display: none !important; }
                         }
                     </style>
                 </head>
                 <body>
                     <div class="header">
-                        <div class="blood-icon">🩸</div>
+                        <span class="blood-icon">🩸</span>
                         <h1>Blood Donation Registration</h1>
-                        <p>Donor Certificate</p>
                         <div class="organizer-header">
                             <span class="org-label">Organised by</span>
-                            <span class="org-name">PLATEMASTERS</span>
-                            <span class="org-address">Plot No. 97, Sector No. 10, PCNTDA, Bhosari, Pune 411026</span>
+                            <span class="org-name">PLATEMASTERS</span><br>
+                            <span class="org-address">Plot No. 97, Sector No. 10, PCNTDA, Bhosari, Pune 411026</span><br>
+                            <span class="org-date">13th February 2026</span>
                         </div>
                     </div>
 
@@ -757,31 +761,62 @@
                         <div class="reg-badge">Registration No: ${donor.regNo}</div>
                     </div>
 
-                    <div class="card">
-                        <h2>Donor Information</h2>
-                        <div class="info-row">
-                            <div class="label">Name:</div>
-                            <div class="value">${donor.name}</div>
+                    <div class="main-container">
+                        <div class="left-section">
+                            <div class="card">
+                                <h2>Donor Information</h2>
+                                <div class="info-row">
+                                    <div class="label">Name:</div>
+                                    <div class="value">${donor.name}</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="label">Age:</div>
+                                    <div class="value">${donor.age} years</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="label">Gender:</div>
+                                    <div class="value">${donor.gender === 'M' ? 'Male' : donor.gender === 'F' ? 'Female' : 'Other'}</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="label">Mobile:</div>
+                                    <div class="value">${donor.mobile}</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="label">Referred By:</div>
+                                    <div class="value">${donor.referBy || '-'}</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="label">Date:</div>
+                                    <div class="value">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="info-row">
-                            <div class="label">Age:</div>
-                            <div class="value">${donor.age} years</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="label">Gender:</div>
-                            <div class="value">${donor.gender === 'M' ? 'Male' : donor.gender === 'F' ? 'Female' : 'Other'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="label">Mobile:</div>
-                            <div class="value">${donor.mobile}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="label">Referred By:</div>
-                            <div class="value">${donor.referBy || '-'}</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="label">Date:</div>
-                            <div class="value">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
+
+                        <div class="right-section">
+                            <div class="card" style="padding: 0; overflow: hidden;">
+                                <table class="blood-bank-table">
+                                    <tr>
+                                        <td class="label-cell header-cell">Blood Bank Report</td>
+                                        <td>Accepted</td>
+                                        <td>Rejected</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Blood Bank No.</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">Certificate</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-cell">G</td>
+                                        <td>Big</td>
+                                        <td>Small</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
@@ -790,54 +825,14 @@
                         <p>Your donation can save up to 3 lives.</p>
                     </div>
 
-                    <div class="blood-bank-section">
-                        <table class="blood-bank-table">
-                            <tr>
-                                <td class="label-cell">Accepted</td>
-                                <td class="header-cell wide-cell">Blood Bank Report</td>
-                                <td class="checkbox-cell">Rejected</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td class="header-cell">Blood Bank No.</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td class="header-cell">Certificate</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="label-cell">Yes</td>
-                                <td></td>
-                                <td>No</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>G</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="label-cell">Big</td>
-                                <td></td>
-                                <td>Small</td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div style="text-align: center; margin-top: 20px;" class="no-print">
+                    <div style="text-align: center; margin-top: 10px;" class="no-print">
                         <button onclick="window.print()" style="
-                            padding: 10px 35px;
+                            padding: 6px 25px;
                             background: #c0392b;
                             color: white;
                             border: none;
-                            border-radius: 8px;
-                            font-size: 1rem;
+                            border-radius: 5px;
+                            font-size: 0.85rem;
                             cursor: pointer;
                         ">Print This Page</button>
                     </div>

@@ -619,19 +619,8 @@
                             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                             padding: 5px 10px;
                             font-size: 9px;
-                        }
-                        .main-container {
-                            display: flex;
-                            gap: 15px;
-                            align-items: flex-start;
-                        }
-                        .left-section {
-                            flex: 1;
-                        }
-                        .right-section {
-                            flex: 1;
-                            display: flex;
-                            flex-direction: column;
+                            max-width: 550px;
+                            margin: 0 auto;
                         }
                         .header {
                             text-align: center;
@@ -671,31 +660,27 @@
                             font-size: 1rem;
                         }
                         .reg-badge {
-                            background: #c0392b;
-                            color: white;
-                            padding: 2px 10px;
-                            border-radius: 10px;
-                            display: inline-block;
-                            font-size: 0.65rem;
+                            color: #c0392b;
+                            font-size: 0.7rem;
                             font-weight: bold;
-                            margin: 4px 0;
+                            margin: 3px 0;
                         }
                         .card {
                             border: 1px solid #c0392b;
                             border-radius: 5px;
                             padding: 5px 8px;
-                            margin-bottom: 5px;
+                            margin-bottom: 8px;
                         }
                         .card h2 {
                             color: #c0392b;
                             margin-bottom: 4px;
                             text-align: center;
-                            font-size: 0.75rem;
+                            font-size: 0.7rem;
                         }
                         .info-row {
                             display: flex;
                             border-bottom: 1px solid #eee;
-                            padding: 5px 0;
+                            padding: 3px 0;
                             align-items: center;
                         }
                         .info-row:last-child {
@@ -704,29 +689,30 @@
                         .label {
                             font-weight: 600;
                             color: #333;
-                            width: 70px;
-                            font-size: 0.65rem;
+                            width: 65px;
+                            font-size: 0.6rem;
                         }
                         .value {
                             color: #555;
                             flex: 1;
-                            font-size: 0.65rem;
+                            font-size: 0.6rem;
                             text-align: center;
                         }
                         .thank-you {
                             text-align: center;
                             color: #666;
-                            font-size: 0.55rem;
-                            margin-top: 4px;
+                            font-size: 0.5rem;
+                            margin-top: 5px;
                         }
                         .blood-bank-table {
                             width: 100%;
                             border-collapse: collapse;
-                            font-size: 0.65rem;
+                            font-size: 0.6rem;
+                            margin-top: 8px;
                         }
                         .blood-bank-table td {
                             border: 1px solid #c0392b;
-                            padding: 6px 8px;
+                            padding: 4px 6px;
                             text-align: center;
                         }
                         .blood-bank-table .header-cell {
@@ -736,11 +722,10 @@
                         }
                         .blood-bank-table .label-cell {
                             font-weight: 600;
-                            width: 40%;
                             text-align: left;
                         }
                         @media print {
-                            body { padding: 3px; }
+                            body { padding: 3px; max-width: 550px; }
                             .no-print { display: none !important; }
                         }
                     </style>
@@ -761,64 +746,55 @@
                         <div class="reg-badge">Registration No: ${donor.regNo}</div>
                     </div>
 
-                    <div class="main-container">
-                        <div class="left-section">
-                            <div class="card">
-                                <h2>Donor Information</h2>
-                                <div class="info-row">
-                                    <div class="label">Name:</div>
-                                    <div class="value">${donor.name}</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="label">Age:</div>
-                                    <div class="value">${donor.age} years</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="label">Gender:</div>
-                                    <div class="value">${donor.gender === 'M' ? 'Male' : donor.gender === 'F' ? 'Female' : 'Other'}</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="label">Mobile:</div>
-                                    <div class="value">${donor.mobile}</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="label">Referred By:</div>
-                                    <div class="value">${donor.referBy || '-'}</div>
-                                </div>
-                                <div class="info-row">
-                                    <div class="label">Date:</div>
-                                    <div class="value">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
-                                </div>
-                            </div>
+                    <div class="card">
+                        <h2>Donor Information</h2>
+                        <div class="info-row">
+                            <div class="label">Name:</div>
+                            <div class="value">${donor.name}</div>
                         </div>
-
-                        <div class="right-section">
-                            <div class="card" style="padding: 0; overflow: hidden;">
-                                <table class="blood-bank-table">
-                                    <tr>
-                                        <td class="label-cell header-cell">Blood Bank Report</td>
-                                        <td>Accepted</td>
-                                        <td>Rejected</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-cell">Blood Bank No.</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-cell">Certificate</td>
-                                        <td>Yes</td>
-                                        <td>No</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="label-cell">G</td>
-                                        <td>Big</td>
-                                        <td>Small</td>
-                                    </tr>
-                                </table>
-                            </div>
+                        <div class="info-row">
+                            <div class="label">Age:</div>
+                            <div class="value">${donor.age} years</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Gender:</div>
+                            <div class="value">${donor.gender === 'M' ? 'Male' : donor.gender === 'F' ? 'Female' : 'Other'}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Mobile:</div>
+                            <div class="value">${donor.mobile}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Referred By:</div>
+                            <div class="value">${donor.referBy || '-'}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="label">Date:</div>
+                            <div class="value">${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
                         </div>
                     </div>
+
+                    <table class="blood-bank-table">
+                        <tr>
+                            <td class="label-cell header-cell">Blood Bank Report</td>
+                            <td>Accepted</td>
+                            <td>Rejected</td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Blood Bank No.</td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Certificate</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">G</td>
+                            <td>Big</td>
+                            <td>Small</td>
+                        </tr>
+                    </table>
 
                     <div class="thank-you">
                         <p>Thank you for your generous contribution!</p>
